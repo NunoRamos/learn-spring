@@ -21,4 +21,17 @@ class TodoController(
     fun createItem(@RequestBody todo: Todo) : Todo {
         return this.todoRepository.save(todo)
     }
+
+    @DeleteMapping("/{id}")
+    fun deleteUser(@RequestParam id: String ) : ResponseEntity<Todo>{
+
+        if(this.todoRepository.existsById(id)) {
+            this.todoRepository.deleteById(id)
+        }
+        else {
+            return ResponseEntity.notFound().build()
+        }
+
+        return ResponseEntity.ok().build()
+    }
 }
