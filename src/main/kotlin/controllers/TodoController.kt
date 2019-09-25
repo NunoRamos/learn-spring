@@ -1,8 +1,8 @@
 package controllers
 
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import repositories.TodoRepository
+import entities.Todo
 
 @RestController
 @RequestMapping("/todos")
@@ -10,5 +10,8 @@ import repositories.TodoRepository
 class TodoController(
         private val todoRepository: TodoRepository){
 
-    //Rotas
+    @PostMapping
+    fun createItem(@RequestBody todo: Todo) : Todo {
+        return this.todoRepository.save(todo)
+    }
 }
