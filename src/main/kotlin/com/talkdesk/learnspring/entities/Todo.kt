@@ -8,6 +8,6 @@ import javax.persistence.Id
 data class Todo (
     @Id
     val id: String = UUID.randomUUID().toString(),
-    val name: String,
-    val status: Boolean = false
+    var name: String?,
+    var status: Boolean? = false
 )

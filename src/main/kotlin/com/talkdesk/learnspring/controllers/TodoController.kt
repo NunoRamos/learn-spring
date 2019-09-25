@@ -1,5 +1,6 @@
 package com.talkdesk.learnspring.controllers
 
+import com.talkdesk.learnspring.entities.DTO.TodoUpdateDTO
 import org.springframework.http.ResponseEntity
 import com.talkdesk.learnspring.repositories.TodoRepository
 import com.talkdesk.learnspring.entities.Todo
@@ -24,12 +25,19 @@ class TodoController(
     }
 
     @PutMapping("{id}")
-    fun updateItem(@PathVariable id: String, @RequestBody todo: Todo) : ResponseEntity<Todo> {
-        val item = this.todoRepository.findById(id)
-        if (item.isPresent)
-            return ResponseEntity.ok(item.get())
+    fun updateItem(@PathVariable id: String, @RequestBody todo: TodoUpdateDTO) : ResponseEntity<Todo> {
+        val item = this.todoRepository.findById(id).map {
+            val name = todo.name ?: it.name
+            val status = todo.status ?: it.status
+            it.copy(name = name, status = status)
+        }
 
-        return ResponseEntity.badRequest().body(todo)
+        if (item.isPresent) {
+            this.todoRepository.save(item.get())
+            return ResponseEntity.ok().body(item.get())
+        }
+
+        return ResponseEntity.badRequest().body(Todo(name = todo.name, status = todo.status))
     }
 
     @DeleteMapping("/{id}")
