@@ -23,12 +23,12 @@ class TodoController(
         return this.todoRepository.save(todo)
     }
 
-    @PutMapping("/:id")
+    @PutMapping("{id}")
     fun updateItem(@RequestParam id: String, @RequestBody todo: Todo) : ResponseEntity<Todo> {
         val item = this.todoRepository.findById(id)
         if (item.isPresent)
             return ResponseEntity.ok(item.get())
 
-        return ResponseEntity.notFound().build()
+        return ResponseEntity.badRequest().body(todo)
     }
 }
