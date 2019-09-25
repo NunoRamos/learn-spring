@@ -24,11 +24,24 @@ class TodoController(
     }
 
     @PutMapping("{id}")
-    fun updateItem(@RequestParam id: String, @RequestBody todo: Todo) : ResponseEntity<Todo> {
+    fun updateItem(@PathVariable id: String, @RequestBody todo: Todo) : ResponseEntity<Todo> {
         val item = this.todoRepository.findById(id)
         if (item.isPresent)
             return ResponseEntity.ok(item.get())
 
         return ResponseEntity.badRequest().body(todo)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteUser(@PathVariable id: String ) : ResponseEntity<Todo>{
+
+        if(this.todoRepository.existsById(id)) {
+            this.todoRepository.deleteById(id)
+        }
+        else {
+            return ResponseEntity.notFound().build()
+        }
+
+        return ResponseEntity.ok().build()
     }
 }
