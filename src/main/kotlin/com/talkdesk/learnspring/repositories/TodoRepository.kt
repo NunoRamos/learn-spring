@@ -1,6 +1,6 @@
-package repositories
+package com.talkdesk.learnspring.repositories
 
-import entities.Todo
+import com.talkdesk.learnspring.entities.Todo
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 

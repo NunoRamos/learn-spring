@@ -1,4 +1,4 @@
-package entities
+package com.talkdesk.learnspring.entities
 
 import java.util.*
 import javax.persistence.Entity
@@ -9,5 +9,5 @@ data class Todo (
     @Id
     val id: String = UUID.randomUUID().toString(),
     val name: String,
-    val status: Boolean
+    val status: Boolean = false
 )

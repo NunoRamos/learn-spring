@@ -1,15 +1,15 @@
-package controllers
+package com.talkdesk.learnspring.controllers
 
 import org.springframework.http.ResponseEntity
-import repositories.TodoRepository
-import entities.Todo
+import com.talkdesk.learnspring.repositories.TodoRepository
+import com.talkdesk.learnspring.entities.Todo
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/todos")
-
 class TodoController(
-        private val todoRepository: TodoRepository){
+        private val todoRepository: TodoRepository
+){
 
     @GetMapping
     fun listTodos(): ResponseEntity<List<Todo>> {
